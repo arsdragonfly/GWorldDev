@@ -1,9 +1,11 @@
 var dc = {}
 dc.setDestination = function(creep,object) {
+  if (object) {
   creep.memory.destination = {
     x: object.pos.x,
     y: object.pos.y
   }
+}
 }.bind(dc)
 dc.randomPick = function(array) {
   var len = array.length
