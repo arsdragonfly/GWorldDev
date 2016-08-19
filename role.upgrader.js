@@ -29,7 +29,13 @@ var roleUpgrader = {
       var c = creep.room.lookForAt(LOOK_STRUCTURES, creep.memory.destination.x, creep.memory.destination.y)
       if(c.length > 0) {
         if(creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(c[0]);
+          creep.moveTo(c[0])
+          return
+        }
+        if(creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_ENOUGH_RESOURCES) {
+          var cc = creep.room.find(FIND_STRUCTURES,{filter: filters.nonEmptyCentralContainer})
+          dc.initializeDestination(creep,cc)
+          return
         }
       }
     }
