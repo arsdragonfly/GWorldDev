@@ -25,9 +25,9 @@ module.exports.loop = function () {
     controlCreepNumber.run('towerMaintainer', 1)
     controlCreepNumber.run('upgrader', 3)
     controlCreepNumber.run('carrier', 3)
-    controlCreepNumber.run('harvester', 2)
+    //controlCreepNumber.run('harvester', 2)
     controlCreepNumber.run('courier', 1)
-    controlCreepNumber.run('superHarvester', 1)
+    controlCreepNumber.run('superHarvester', 2)
 
 //role assigning
     for(var name in Game.creeps) {

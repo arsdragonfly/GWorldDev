@@ -16,9 +16,12 @@ var roleSuperHarvester = {
       creep.say('unloading')
     }
     if(creep.memory.harvesting) {
-      var sources = creep.room.find(FIND_SOURCES);
-      if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(sources[1]);
+      if(!creep.pos.isEqualTo(Game.flags[creep.memory.workSite])) {
+        creep.moveTo(Game.flags[creep.memory.workSite])
+      }
+      else {
+        var source = creep.pos.findClosestByRange(FIND_SOURCES)
+        creep.harvest(source)
       }
     }
     else {
