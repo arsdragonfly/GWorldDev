@@ -6,6 +6,10 @@ var controlCreepNumber = {
     if(role.length < roleNumber) {
       switch (roleName)
       {
+        case 'remoteBuilder':
+          var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName, roomName: 'W39N57'});
+          console.log('Spawning new ' + roleName + ': '  + newName);
+          break
         case 'defender':
           var newName = Game.spawns['Spawn1'].createCreep([RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
           console.log('Spawning new ' + roleName + ': '  + newName);
@@ -47,7 +51,7 @@ var controlCreepNumber = {
             }
           }
           if (availableSites.length > 0) {
-            var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE], undefined, {role: roleName, workSite: availableSites[0]});
+            var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName, workSite: availableSites[0]});
             console.log('Spawning new ' + roleName + ': '  + newName);
           }
           break

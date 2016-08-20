@@ -6,6 +6,7 @@ var roleCourier = require('role.courier')
 var roleTowerMaintainer = require('role.tower.maintainer')
 var roleCarrier = require('role.carrier')
 var roleSuperHarvester = require('role.super.harvester')
+var roleRemoteBuilder = require('role.remote.builder')
 var structureTower = require('structure.tower')
 var controlCreepNumber = require('control.creep.number')
 var memoryUpdate = require('memory.update')
@@ -20,14 +21,15 @@ module.exports.loop = function () {
     }
 
 //creeps number control
-    controlCreepNumber.run('defender', 3)
-    controlCreepNumber.run('builder', 2)
+    controlCreepNumber.run('defender', 1)
+    controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('towerMaintainer', 1)
-    controlCreepNumber.run('upgrader', 3)
+    controlCreepNumber.run('upgrader', 4)
     controlCreepNumber.run('carrier', 3)
     //controlCreepNumber.run('harvester', 2)
+    controlCreepNumber.run('remoteBuilder', 2)
     controlCreepNumber.run('courier', 1)
-    controlCreepNumber.run('superHarvester', 2)
+    controlCreepNumber.run('superHarvester', 3)
 
 //role assigning
     for(var name in Game.creeps) {
@@ -49,6 +51,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'carrier') {
             roleCarrier.run(creep);
+        }
+        if(creep.memory.role == 'remoteBuilder') {
+            roleRemoteBuilder.run(creep);
         }
         if(creep.memory.role == 'superHarvester') {
             roleSuperHarvester.run(creep);
