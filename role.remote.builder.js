@@ -21,7 +21,7 @@ var roleRemoteBuilder = {
       var targetRoomNames = Memory.userdata[roomName].remoteConstructionRooms
       for (i in targetRoomNames) {
         var targets = Game.rooms[targetRoomNames[i]].find(FIND_CONSTRUCTION_SITES)
-        if (targets.length) {
+        if (targets.length > 0) {
           creep.memory.targetRoomName = targetRoomNames[i]
           if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0])
@@ -29,27 +29,18 @@ var roleRemoteBuilder = {
           }
         }
       }
-      targets = creep.room.find(FIND_MY_STRUCTURES, {filter: (structure) => structure.hits < structure.hitsMax})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
+      for (i in targetRoomNames) {
+        //Move the creep out of the initial room anyway
+        var targets = Game.rooms[targetRoomNames[i]].find(FIND_STRUCTURES,{filter: filters.maintenanceRequiringStructure})
+          if (targets.length > 0) {
+            creep.memory.targetRoomName = targetRoomNames[i]
+            if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+              creep.moveTo(targets[0])
+              return
+            }
+          }
         }
-        return
-      }
-      targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && (structure.hits < structure.hitsMax)})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
-        return
-      }
-      targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_ROAD && (structure.hits < structure.hitsMax)})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
-        return
-      }
+      cf.repairInRoom(creep)
     }
     else {
       cf.pickupEnergy(creep)

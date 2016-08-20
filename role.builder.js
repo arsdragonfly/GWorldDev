@@ -1,3 +1,4 @@
+var filters = require('library.filters')
 var cf = require('library.creep.features')
 var roleBuilder = {
 
@@ -16,6 +17,7 @@ var roleBuilder = {
     }
 
     if (creep.memory.building) {
+      //Construction sites
       var targets = creep.room.find(FIND_CONSTRUCTION_SITES)
       if (targets.length) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
@@ -23,41 +25,27 @@ var roleBuilder = {
         }
         return
       }
-      targets = creep.room.find(FIND_MY_STRUCTURES, {filter: (structure) => structure.hits < structure.hitsMax})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
-        return
-      }
-      targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && (structure.hits < structure.hitsMax)})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
-        return
-      }
-      targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_ROAD && (structure.hits < structure.hitsMax)})
-      if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
-        return
-      }
+      cf.repairInRoom(creep)
     }
     else {
-      var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY] > 0)})
+      //not building; go load some resources
+      var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.nonEmptyContainer})
       if (container) {
-        if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container)
         }
         return
       }
-      //var sources = creep.room.find(FIND_SOURCES);
-      //if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-      //  creep.moveTo(sources[0]);
-      //  return;
-      //}
+      container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.container})
+      if (!container)
+      {
+        //no containers; fall back to collecting resources from energy sources
+        var sources = creep.room.find(FIND_SOURCES);
+        if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(sources[0]);
+          return;
+        }
+      }
     }
   }
 };
