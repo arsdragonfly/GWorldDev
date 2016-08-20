@@ -1,4 +1,5 @@
 var dc = require('library.destination.control')
+var cf = require('library.creep.features')
 var filters = require('library.filters')
 var roleUpgrader = {
 
@@ -30,6 +31,7 @@ var roleUpgrader = {
       var c = creep.room.lookForAt(LOOK_STRUCTURES, creep.memory.destination.x, creep.memory.destination.y)
       if(c.length > 0) {
         if(creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          cf.pickupEnergy(creep)
           creep.moveTo(c[0])
           return
         }

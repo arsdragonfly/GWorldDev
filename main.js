@@ -21,7 +21,7 @@ module.exports.loop = function () {
     }
 
 //creeps number control
-    controlCreepNumber.run('defender', 1)
+    controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('towerMaintainer', 1)
     controlCreepNumber.run('upgrader', 4)
