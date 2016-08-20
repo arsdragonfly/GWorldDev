@@ -9,6 +9,7 @@ var roleUpgrader = {
       creep.memory.upgrading = false
       var cc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyCentralContainer });
       dc.initializeDestination(creep,cc)
+      return
     }
 
     if(creep.memory.upgrading && creep.carry.energy == 0) {

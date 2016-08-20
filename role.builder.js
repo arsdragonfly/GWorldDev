@@ -1,7 +1,10 @@
+var cf = require('library.creep.features')
 var roleBuilder = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
+
+    cf.pickupEnergy(creep)
 
     if (creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false
@@ -43,10 +46,10 @@ var roleBuilder = {
       }
     }
     else {
-      var containers = creep.room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY] > 0)})
-      if (containers.length) {
-        if (creep.withdraw(containers[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(containers[0])
+      var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER && (structure.store[RESOURCE_ENERGY] > 0)})
+      if (container) {
+        if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(container)
         }
         return
       }

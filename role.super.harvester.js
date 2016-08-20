@@ -32,6 +32,14 @@ var roleSuperHarvester = {
         if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container);
         }
+        return
+      }
+      container = Game.getObjectById('57b4c86c42baa5bf50b18093')
+      if(container) {
+        if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(container);
+        }
+        return
       }
     }
   }
