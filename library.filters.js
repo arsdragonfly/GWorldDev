@@ -1,6 +1,6 @@
 var filters = {}
 filters.container = function(structure) {
-    return structure.structureType == STRUCTURE_CONTAINER
+    return structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE
   }.bind(filters)
 filters.nonEmptyContainer = function(structure) {
     return this.container(structure) && structure.store[RESOURCE_ENERGY] > 0
@@ -9,7 +9,7 @@ filters.nonFullContainer = function(structure) {
     return this.container(structure) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity
   }.bind(filters)
 filters.centralContainer = function(structure) {
-    return this.container(structure) && (Memory.userdata[structure.id] == 'centralContainer')
+    return Memory.userdata[structure.id] == 'centralContainer'
   }.bind(filters)
 filters.secondaryContainer = function(structure) {
     return this.container(structure) && (Memory.userdata[structure.id] != 'centralContainer')
