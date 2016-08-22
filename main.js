@@ -7,11 +7,19 @@ var roleTowerMaintainer = require('role.tower.maintainer')
 var roleCarrier = require('role.carrier')
 var roleSuperHarvester = require('role.super.harvester')
 var roleRemoteBuilder = require('role.remote.builder')
+var roleRemoteMaintainer = require('role.remote.maintainer')
+var roleRemoteCarrier = require('role.remote.carrier')
+var roleRemoteReserver = require('role.remote.reserver')
 var structureTower = require('structure.tower')
 var controlCreepNumber = require('control.creep.number')
+var ScreepsStats = require('screepsstats')
 var memoryUpdate = require('memory.update')
 
+global.Stats = new ScreepsStats()
+
 module.exports.loop = function () {
+    memoryUpdate.run()
+    structureTower.run()
 
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -21,15 +29,18 @@ module.exports.loop = function () {
     }
 
 //creeps number control
-    controlCreepNumber.run('defender', 2)
+    controlCreepNumber.run('remoteBuilder', 2)
+    controlCreepNumber.run('remoteMaintainer', 4)
+    controlCreepNumber.run('remoteReserver', 2)
+    controlCreepNumber.run('remoteCarrier', 4)
     controlCreepNumber.run('builder', 1)
+    controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('towerMaintainer', 1)
-    controlCreepNumber.run('upgrader', 4)
+    controlCreepNumber.run('upgrader', 3)
     controlCreepNumber.run('carrier', 3)
     //controlCreepNumber.run('harvester', 2)
-    controlCreepNumber.run('remoteBuilder', 2)
     controlCreepNumber.run('courier', 1)
-    controlCreepNumber.run('superHarvester', 3)
+    controlCreepNumber.run('superHarvester', 5)
 
 //role assigning
     for(var name in Game.creeps) {
@@ -55,6 +66,15 @@ module.exports.loop = function () {
         if(creep.memory.role == 'remoteBuilder') {
             roleRemoteBuilder.run(creep);
         }
+        if(creep.memory.role == 'remoteMaintainer') {
+            roleRemoteMaintainer.run(creep);
+        }
+        if(creep.memory.role == 'remoteCarrier') {
+            roleRemoteCarrier.run(creep);
+        }
+        if(creep.memory.role == 'remoteReserver') {
+            roleRemoteReserver.run(creep);
+        }
         if(creep.memory.role == 'superHarvester') {
             roleSuperHarvester.run(creep);
         }
@@ -62,6 +82,6 @@ module.exports.loop = function () {
             roleTowerMaintainer.run(creep);
         }
     }
-    memoryUpdate.run()
-    structureTower.run()
+
+    Stats.runBuiltinStats()
 }

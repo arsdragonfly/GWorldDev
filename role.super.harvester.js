@@ -1,4 +1,5 @@
 var filters = require('library.filters')
+var cf = require('library.creep.features')
 var roleSuperHarvester = {
 
   /** @param {Creep} creep **/
@@ -16,6 +17,7 @@ var roleSuperHarvester = {
       creep.say('unloading')
     }
     if(creep.memory.harvesting) {
+      cf.pickupEnergy(creep)
       if(!creep.pos.isEqualTo(Game.flags[creep.memory.workSite])) {
         creep.moveTo(Game.flags[creep.memory.workSite])
       }
@@ -32,9 +34,11 @@ var roleSuperHarvester = {
         if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container);
         }
+        var source = creep.pos.findClosestByRange(FIND_SOURCES)
+        creep.harvest(source)
         return
       }
-      container = Game.getObjectById('57b4c86c42baa5bf50b18093')
+      container = Game.getObjectById('57b4c86c42baa5bf50b18093') //TODO: do it more gracefully
       if(container) {
         if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(container);

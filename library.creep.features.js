@@ -37,7 +37,7 @@ cf.repairInRoom = function(creep) {
     return
   }
   //ramparts below designated hits
-  targets = creep.room.find(FIND_MY_STRUCTURES, {filter: filters.damagedRampartBelow(10000)})
+  targets = creep.room.find(FIND_MY_STRUCTURES, {filter: filters.damagedRampartBelow(200000)})
   if (targets.length) {
     if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
       creep.moveTo(targets[0])
@@ -53,7 +53,7 @@ cf.repairInRoom = function(creep) {
     return
   }
   //walls below designated hits
-  targets = creep.room.find(FIND_MY_STRUCTURES, {filter: filters.damagedWallBelow(10000)})
+  targets = creep.room.find(FIND_MY_STRUCTURES, {filter: filters.damagedWallBelow(2000000)})
   if (targets.length) {
     if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
       creep.moveTo(targets[0])

@@ -26,7 +26,7 @@ var structureTower = {
       return
     }
     //repairing all kinds of structures
-    if (tower.energy > tower.energyCapacity * 0.75) {
+    if (tower.energy > tower.energyCapacity * 0.95) {
       //interestingly, we can use the creepFeatures library here
       cf.repairInRoom(tower)
     }

@@ -1,14 +1,14 @@
 var filters = require('library.filters')
 var dc = require('library.destination.control')
 
-var initializeDestination
+
 var roleCarrier = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-    if (creep.memory.loading === null || creep.memory.destination === null || creep.memory.destination === undefined) {
+    if (creep.memory.loading === null || creep.memory.destination == null) {
       creep.memory.loading = true
-    var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+      var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
       dc.initializeDestination(creep,sc)
     }
     if (!creep.memory.loading && creep.carry.energy == 0) {
@@ -28,14 +28,18 @@ var roleCarrier = {
       if(creep.withdraw(c[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(c[0]);
       }
+      else {
+        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+        dc.initializeDestination(creep,sc)
+      }
     }
     else {
-      var targets = creep.room.find(FIND_STRUCTURES, {
+      var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: filters.emptyExtension
       })
-      if(targets.length > 0) {
-        if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0]);
+      if(target) {
+        if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(target);
         }
       }
       else
