@@ -15,7 +15,7 @@ var controlCreepNumber = {
         console.log('Spawning new ' + roleName + ': '  + newName);
         break
         case 'remoteCarrier':
-        var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName, roomName: 'W39N57'});
+        var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName, roomName: 'W39N57'});
         console.log('Spawning new ' + roleName + ': '  + newName);
         break
         case 'remoteReserver':
@@ -35,7 +35,7 @@ var controlCreepNumber = {
         console.log('Spawning new ' + roleName + ': '  + newName);
         break
         case 'carrier':
-        var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
+        var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
         //var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], undefined, {role: roleName});
         console.log('Spawning new ' + roleName + ': '  + newName);
         break

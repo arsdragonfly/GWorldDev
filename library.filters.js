@@ -37,7 +37,13 @@ filters.damagedStructure = function(structure) {
   return structure.hits < structure.hitsMax
 }.bind(filters)
 filters.damagedStructureOfType = function(type) {
-  return function(structure) {return this.damagedStructure(structure) && structure.structureType == type}.bind(filters)
+  //type, [hitsBelow]
+  if (arguments[1] == undefined) {
+    return function(structure) {return this.damagedStructure(structure) && structure.structureType == type}.bind(filters)
+  }
+  else {
+    return function(structure) {return this.damagedStructure(structure) && structure.structureType == type && structure.hits < arguments[1]}.bind(filters)
+  }
 }.bind(filters)
 filters.damagedRampartBelow = function(targetHits) {
   return function(structure) {
@@ -63,19 +69,19 @@ filters.maintenanceRequiringStructure = function() {
   if (args[1] == null) {
     //default hits level
     return this.damagedStructure(structure) && (
-      (this.damagedRampartBelow(10000))(structure) ||
-      (this.damagedWallBelow(10000))(structure))
+      (this.damagedStructureOfType(STRUCTURE_RAMPART, 10000))(structure) ||
+      (this.damagedStructureOfType(STRUCTURE_WALL, 10000))(structure))
   }
   else if (args[1].rampartTargetHits > 0 && args[1].wallTargetHits > 0) {
     return this.damagedStructure(structure) && (
-      (this.damagedRampartBelow(args[1].rampartTargetHits))(structure) ||
-      (this.damagedWallBelow(args[1].wallTargetHits))(structure))
+      (this.damagedStructureOfType(STRUCTURE_RAMPART, args[1].rampartTargetHits))(structure) ||
+      (this.damagedStructureOfType(STRUCTURE_WALL, args[1].wallTargetHits))(structure))
   }
   else {
     //incorrect args given
     return this.damagedStructure(structure) && (
-      (this.damagedRampartBelow(10000))(structure) ||
-      (this.damagedWallBelow(10000))(structure))
+      (this.damagedStructureOfType(STRUCTURE_RAMPART, 10000))(structure) ||
+      (this.damagedStructureOfType(STRUCTURE_WALL, 10000))(structure))
   }
 }.bind(filters)
 module.exports = filters

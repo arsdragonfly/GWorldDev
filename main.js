@@ -32,15 +32,15 @@ module.exports.loop = function () {
     }
 
 //creeps number control
-    controlCreepNumber.run('remoteBuilder', 2)
-    controlCreepNumber.run('remoteMaintainer', 4)
+    controlCreepNumber.run('remoteBuilder', 1)
+    controlCreepNumber.run('remoteMaintainer', 2)
     controlCreepNumber.run('remoteReserver', 2)
-    controlCreepNumber.run('remoteCarrier', 6)
+    controlCreepNumber.run('remoteCarrier', 5)
     controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('towerMaintainer', 1)
     controlCreepNumber.run('upgrader', 4)
-    controlCreepNumber.run('carrier', 5)
+    controlCreepNumber.run('carrier', 4)
     //controlCreepNumber.run('harvester', 2)
     controlCreepNumber.run('courier', 1)
     controlCreepNumber.run('superHarvester', 5)
