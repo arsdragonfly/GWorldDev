@@ -43,20 +43,14 @@ var roleRemoteMaintainer = {
 
     }
     else {
-      cf.pickupEnergy(creep)
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.nonEmptyContainer})
       if (container) {
-        if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(container)
-        }
+        cf.moveToDo(creep, container, 'withdraw')
         return
       }
       if (creep.memory.targetRoomName && Game.rooms[creep.memory.targetRoomName] != undefined) {
         var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
-        var result = creep.harvest(sources[0])
-        if(result == ERR_NOT_IN_RANGE) {
-          creep.moveTo(sources[0])
-        }
+        cf.moveToDo(creep, sources[0], 'harvest')
         return
       }
     }

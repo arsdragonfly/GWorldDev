@@ -1,3 +1,4 @@
+var cf = require('library.creep.features')
 var roleTowerMaintainer = {
 
   /** @param {Creep} creep **/
@@ -9,9 +10,7 @@ var roleTowerMaintainer = {
           structure.store[RESOURCE_ENERGY] > 0
         }
       });
-      if(creep.withdraw(containers[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(containers[0]);
-      }
+      cf.moveToDo(creep, containers[0], 'withdraw')
     }
     else {
       var targets = creep.room.find(FIND_MY_STRUCTURES, {
@@ -21,9 +20,7 @@ var roleTowerMaintainer = {
         }
       });
       if(targets.length > 0) {
-        if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0]);
-        }
+        cf.moveToDo(creep, targets[0], 'transfer')
       }
     }
   }

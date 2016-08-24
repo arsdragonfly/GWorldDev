@@ -39,7 +39,7 @@ module.exports.loop = function () {
     controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('towerMaintainer', 1)
-    controlCreepNumber.run('upgrader', 3)
+    controlCreepNumber.run('upgrader', 4)
     controlCreepNumber.run('carrier', 5)
     //controlCreepNumber.run('harvester', 2)
     controlCreepNumber.run('courier', 1)

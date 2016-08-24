@@ -25,9 +25,7 @@ var roleRemoteBuilder = {
           var targets = Game.rooms[targetRoomNames[i]].find(FIND_CONSTRUCTION_SITES)
           if (targets.length > 0) {
             creep.memory.targetRoomName = targetRoomNames[i]
-            if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-              creep.moveTo(targets[0])
-            }
+            cf.moveToDo(creep, targets[0], 'build')
             return
           }
         }
@@ -38,23 +36,17 @@ var roleRemoteBuilder = {
           var targets = Game.rooms[targetRoomNames[i]].find(FIND_STRUCTURES,{filter: filters.maintenanceRequiringStructure})
           if (targets.length > 0) {
             creep.memory.targetRoomName = targetRoomNames[i]
-            if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-              creep.moveTo(targets[0])
-              return
-            }
+            cf.moveToDo(creep, targets[0], 'repair')
+            return
           }
         }
       }
       cf.repairInRoom(creep)
     }
-    else {
-      cf.pickupEnergy(creep)
-
+    else { //loading resources
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.nonEmptyContainer})
       if (container) {
-        if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(container)
-        }
+        cf.moveToDo(creep, container, 'withdraw')
         return
       }
 
@@ -63,12 +55,9 @@ var roleRemoteBuilder = {
           var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
           dc.initializeDestination(creep, sources, 'energySource')
           var target = dc.findDestinationInRoom(creep,'energySource','source')
-          if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(target)
-          }
+          cf.moveToDo(creep, target, 'harvest')
         }
       }
-
     }
   }
 }

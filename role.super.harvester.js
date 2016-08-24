@@ -31,8 +31,8 @@ var roleSuperHarvester = {
         filter: filters.container
       });
       if(container) {
-        if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(container);
+        if (Game.time % 3 == 0) {//TODO: rework this later
+          cf.moveToDo(creep, container, 'transfer')
         }
         var source = creep.pos.findClosestByRange(FIND_SOURCES)
         creep.harvest(source)
@@ -40,9 +40,7 @@ var roleSuperHarvester = {
       }
       container = Game.getObjectById('57b4c86c42baa5bf50b18093') //TODO: do it more gracefully
       if(container) {
-        if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(container);
-        }
+        cf.moveToDo(creep, container, 'transfer')
         return
       }
     }

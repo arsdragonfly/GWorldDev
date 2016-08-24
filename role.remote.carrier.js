@@ -39,36 +39,19 @@ var rc = {
           }
         }
 
-        //TODO: remove this legacy block soon after
-        if (creep.memory.loadingDestination != undefined) {
-          var c = Game.rooms[creep.memory.targetRoomName].lookForAt(LOOK_STRUCTURES, creep.memory.loadingDestination.x, creep.memory.loadingDestination.y)
-          if (creep.withdraw(c[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(c[0]);
-          }
-          else {
-            var targets = Game.rooms[creep.memory.targetRoomName].find(FIND_STRUCTURES, {filter: filters.nonEmptySecondaryContainer})
-            if (targets.length > 0) {
-              var target = dc.randomPick(targets)
-              creep.memory.loadingDestination = {
-                x: target.pos.x,
-                y: target.pos.y
-              }
-            }
-          }
-        }
-
         if (creep.memory.destination.loading != undefined) {
-          var c = dc.findDestinationInRoom(creep, 'loading', 'structure', filters.container)
-          if (creep.withdraw(c[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(c[0]);
-          }
-          else {
-            var targets = Game.rooms[creep.memory.targetRoomName].find(FIND_STRUCTURES, {filter: filters.nonEmptySecondaryContainer})
-            if (targets.length > 0) {
-              var target = dc.randomPick(targets)
-              creep.memory.loadingDestination = {
-                x: target.pos.x,
-                y: target.pos.y
+          var c = dc.findDestinationInTargetRoom(creep, 'loading', 'structure', creep.memory.targetRoomName, filters.container)
+          if (c.length > 0) {
+            cf.moveToDo(creep, c[0], 'withdraw')
+            var result = creep.withdraw(c[0], RESOURCE_ENERGY)
+            if (result == ERR_NOT_ENOUGH_RESOURCES || result == OK) {
+              var targets = Game.rooms[creep.memory.targetRoomName].find(FIND_STRUCTURES, {filter: filters.nonEmptySecondaryContainer})
+              if (targets.length > 0) {
+                var target = dc.randomPick(targets)
+                creep.memory.destination.loading = {
+                  x: target.pos.x,
+                  y: target.pos.y
+                }
               }
             }
           }
@@ -77,6 +60,7 @@ var rc = {
     }
     else {
       //unloading
+      dc.clearDestination(creep, 'loading')
       creep.memory.targetRoomName = undefined
       creep.memory.loadingDestination = undefined
       var roomName = creep.memory.roomName
@@ -92,10 +76,7 @@ var rc = {
       }
       if (portalContainers.length > 0) {
         var portalContainer = dc.randomPick(portalContainers)
-        //container = Game.getObjectById('57b4c86c42baa5bf50b18093')
-        if(creep.transfer(portalContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(portalContainer)
-        }
+        cf.moveToDo(creep, portalContainer, 'transfer')
       }
     }
   }

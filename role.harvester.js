@@ -1,3 +1,4 @@
+//This file has long not been updated; use superHarvester instead
 var roleHarvester = {
 
   /** @param {Creep} creep **/

@@ -24,9 +24,7 @@ var rr = {
       var trn = creep.memory.targetRoomName
       if (Game.rooms[trn] != undefined) {
         var targets = Game.rooms[trn].find(FIND_STRUCTURES,{filter: (structure) => {return structure.structureType == STRUCTURE_CONTROLLER}}) //actually there's only 1 target
-        if (creep.reserveController(targets[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0])
-        }
+        cf.moveToDo(creep, targets[0], 'reserveController')
       }
     }
   }

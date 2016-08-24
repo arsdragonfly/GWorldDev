@@ -35,5 +35,15 @@ dc.findDestinationInRoom = function(creep, key, type) {
     return list
   }
 }.bind(dc)
-
+dc.findDestinationInTargetRoom = function(creep, key, type, targetRoomName) {
+  if (creep.memory.destination[key] != undefined) {
+    var list = Game.rooms[targetRoomName].lookAt(creep.memory.destination[key].x, creep.memory.destination[key].y)
+    list = _.filter(list, function (x) {return x.type == type})
+    list = _.map(list, function (x) {return x[type]})
+    if (arguments[4] != undefined) {
+      list = _.filter(list, arguments[4])
+    }
+    return list
+  }
+}.bind(dc)
 module.exports = dc
