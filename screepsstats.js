@@ -53,7 +53,8 @@ ScreepsStats.prototype.runBuiltinStats = function () {
     cpu: {
       limit: Game.cpu.limit,
       tickLimit: Game.cpu.tickLimit,
-      bucket: Game.cpu.bucket
+      bucket: Game.cpu.bucket,
+      used: Game.cpu.getUsed()
     },
     gcl: {
      level: Game.gcl.level,

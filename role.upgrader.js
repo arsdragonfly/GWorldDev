@@ -5,11 +5,11 @@ var roleUpgrader = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-    if (creep.memory.destination === null || creep.memory.destination === undefined)
+    if (creep.memory.destination == undefined)
     {
       creep.memory.upgrading = false
       var cc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyCentralContainer });
-      dc.initializeDestination(creep,cc)
+      dc.initializeDestination(creep,cc,'centralContainer')
       return
     }
 
@@ -23,22 +23,19 @@ var roleUpgrader = {
     }
 
     if(creep.memory.upgrading) {
-      if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(creep.room.controller);
-      }
+      cf.moveToDo(creep, creep.room.controller, 'upgradeController')
     }
     else {
-      var c = creep.room.lookForAt(LOOK_STRUCTURES, creep.memory.destination.x, creep.memory.destination.y)
+      var c = dc.findDestinationInRoom(creep, 'centralContainer', 'structure', filters.nonEmptyCentralContainer)
       if(c.length > 0) {
-        if(creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          cf.pickupEnergy(creep)
-          creep.moveTo(c[0])
-          return
-        }
+        cf.moveToDo(creep, c[0], 'withdraw')
         if(creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_ENOUGH_RESOURCES) {
           var cc = creep.room.find(FIND_STRUCTURES,{filter: filters.nonEmptyCentralContainer})
-          dc.initializeDestination(creep,cc)
-          return
+          dc.initializeDestination(creep,cc) //Let's do it again!
+          var c = dc.findDestinationInRoom(creep, 'centralContainer', 'structure', filters.nonEmptyCentralContainer)
+          if(c.length > 0) {
+            cf.moveToDo(creep, c[0], 'withdraw')
+          }
         }
       }
     }

@@ -60,6 +60,20 @@ cf.repairInRoom = function(creep) {
     }
     return
   }
-}
+}.bind(cf)
+
+cf.moveToDo = function (creep, target, action) {
+  cf.pickupEnergy(creep)
+  if (action == 'withdraw' || action == 'transfer') {
+    //TODO:fix this temporary solution; too lazy to think of other rcl6 stuff
+    if (creep[action](target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(target,{reusePath: 5, serializeMemory: true})
+    }
+    return
+  }
+  if (creep[action](target) == ERR_NOT_IN_RANGE) {
+    creep.moveTo(target,{reusePath: 30, serializeMemory: true})
+  }
+}.bind(cf)
 
   module.exports = cf

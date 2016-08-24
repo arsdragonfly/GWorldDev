@@ -1,3 +1,4 @@
+const profiler = require('screeps-profiler');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -15,9 +16,11 @@ var controlCreepNumber = require('control.creep.number')
 var ScreepsStats = require('screepsstats')
 var memoryUpdate = require('memory.update')
 
+profiler.enable();
 global.Stats = new ScreepsStats()
 
 module.exports.loop = function () {
+  profiler.wrap(function() {
     memoryUpdate.run()
     structureTower.run()
 
@@ -32,12 +35,12 @@ module.exports.loop = function () {
     controlCreepNumber.run('remoteBuilder', 2)
     controlCreepNumber.run('remoteMaintainer', 4)
     controlCreepNumber.run('remoteReserver', 2)
-    controlCreepNumber.run('remoteCarrier', 4)
+    controlCreepNumber.run('remoteCarrier', 6)
     controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('towerMaintainer', 1)
     controlCreepNumber.run('upgrader', 3)
-    controlCreepNumber.run('carrier', 3)
+    controlCreepNumber.run('carrier', 5)
     //controlCreepNumber.run('harvester', 2)
     controlCreepNumber.run('courier', 1)
     controlCreepNumber.run('superHarvester', 5)
@@ -84,4 +87,5 @@ module.exports.loop = function () {
     }
 
     Stats.runBuiltinStats()
+  });
 }

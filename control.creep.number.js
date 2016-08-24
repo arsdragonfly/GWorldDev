@@ -36,6 +36,7 @@ var controlCreepNumber = {
         break
         case 'carrier':
         var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
+        //var newName = Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], undefined, {role: roleName});
         console.log('Spawning new ' + roleName + ': '  + newName);
         break
         case 'superHarvester':

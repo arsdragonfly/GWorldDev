@@ -1,5 +1,6 @@
 var filters = require('library.filters')
 var cf = require('library.creep.features')
+var dc = require('library.destination.control')
 var roleRemoteBuilder = {
 
   /** @param {Creep} creep **/
@@ -49,14 +50,6 @@ var roleRemoteBuilder = {
     else {
       cf.pickupEnergy(creep)
 
-      if (creep.memory.targetRoomName) {
-        var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
-        var result = creep.harvest(sources[0])
-        if(result == ERR_NOT_IN_RANGE) {
-          creep.moveTo(sources[0])
-        }
-        return
-      }
       var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.nonEmptyContainer})
       if (container) {
         if (creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -64,6 +57,18 @@ var roleRemoteBuilder = {
         }
         return
       }
+
+      if (creep.memory.targetRoomName) {
+        if (creep.room.name == creep.memory.targetRoomName) {
+          var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
+          dc.initializeDestination(creep, sources, 'energySource')
+          var target = dc.findDestinationInRoom(creep,'energySource','source')
+          if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(target)
+          }
+        }
+      }
+
     }
   }
 }
