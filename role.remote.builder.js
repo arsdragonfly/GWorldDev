@@ -32,7 +32,7 @@ var roleRemoteBuilder = {
       }
       for (i in targetRoomNames) {
         //Move the creep out of the initial room anyway
-        if (Game.rooms[targetRoomNames[i]] != undefined) {
+        if (Game.rooms[targetRoomNames[i]] != undefined && creep.room.name == creep.memory.roomName) {
           var targets = Game.rooms[targetRoomNames[i]].find(FIND_STRUCTURES,{filter: filters.maintenanceRequiringStructure})
           if (targets.length > 0) {
             creep.memory.targetRoomName = targetRoomNames[i]
@@ -52,10 +52,12 @@ var roleRemoteBuilder = {
 
       if (creep.memory.targetRoomName) {
         if (creep.room.name == creep.memory.targetRoomName) {
-          var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
-          dc.initializeDestination(creep, sources, 'energySource')
+          if (creep.memory.destination == undefined || creep.memory.destination.energySource == undefined) {
+            var sources = Game.rooms[creep.memory.targetRoomName].find(FIND_SOURCES)
+            dc.initializeDestination(creep, sources, 'energySource')
+          }
           var target = dc.findDestinationInRoom(creep,'energySource','source')
-          cf.moveToDo(creep, target, 'harvest')
+          cf.moveToDo(creep, target[0], 'harvest')
         }
       }
     }

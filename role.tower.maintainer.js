@@ -1,8 +1,12 @@
 var cf = require('library.creep.features')
+var sc = require('library.speed.control')
 var roleTowerMaintainer = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
+    if (!sc.speedControl(creep, 1)) {
+      return
+    }
     if(creep.carry.energy < creep.carryCapacity) {
       var containers = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {

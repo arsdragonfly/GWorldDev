@@ -147,12 +147,12 @@ cf.repairInRoom = function(creep) {
         filters.damagedStructureOfType(STRUCTURE_WALL, 200000)(s)) {
           done = false
           this.moveToDo(creep, s, 'repair')
-          break
+          continue
         }
         if (filters.damagedStructureOfType(STRUCTURE_RAMPART)(s) ||
         filters.damagedStructureOfType(STRUCTURE_WALL)(s)) { //at this time, the health has been restored
           dc.clearDestination(creep, 'repairing')
-          break
+          continue
         }
         if (s.hits < s.hitsMax) {
           done = false

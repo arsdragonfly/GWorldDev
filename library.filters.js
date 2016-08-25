@@ -42,8 +42,8 @@ filters.damagedStructureOfType = function(type) {
     return function(structure) {return this.damagedStructure(structure) && structure.structureType == type}.bind(filters)
   }
   else {
-    return function(structure) {return this.damagedStructure(structure) && structure.structureType == type && structure.hits < arguments[1]}.bind(filters)
-  }
+    var arg = arguments[1]
+    return function(structure) {return this.damagedStructure(structure) && structure.structureType == type && structure.hits < arg}.bind(filters) }
 }.bind(filters)
 filters.damagedRampartBelow = function(targetHits) {
   return function(structure) {

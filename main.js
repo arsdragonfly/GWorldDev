@@ -13,11 +13,9 @@ var roleRemoteCarrier = require('role.remote.carrier')
 var roleRemoteReserver = require('role.remote.reserver')
 var structureTower = require('structure.tower')
 var controlCreepNumber = require('control.creep.number')
-var ScreepsStats = require('screepsstats')
 var memoryUpdate = require('memory.update')
 
 profiler.enable();
-global.Stats = new ScreepsStats()
 
 module.exports.loop = function () {
   profiler.wrap(function() {
@@ -25,13 +23,13 @@ module.exports.loop = function () {
     structureTower.run()
 
     for(var name in Memory.creeps) {
-        if(!Game.creeps[name]) {
-            delete Memory.creeps[name];
-            console.log('Clearing non-existing creep memory:', name);
-        }
+      if(!Game.creeps[name]) {
+        delete Memory.creeps[name];
+        console.log('Clearing non-existing creep memory:', name);
+      }
     }
 
-//creeps number control
+    //creeps number control
     controlCreepNumber.run('remoteBuilder', 1)
     controlCreepNumber.run('remoteMaintainer', 2)
     controlCreepNumber.run('remoteReserver', 2)
@@ -39,53 +37,52 @@ module.exports.loop = function () {
     controlCreepNumber.run('builder', 1)
     controlCreepNumber.run('defender', 2)
     controlCreepNumber.run('towerMaintainer', 1)
-    controlCreepNumber.run('upgrader', 4)
+    controlCreepNumber.run('upgrader', 5)
     controlCreepNumber.run('carrier', 4)
     //controlCreepNumber.run('harvester', 2)
     controlCreepNumber.run('courier', 1)
     controlCreepNumber.run('superHarvester', 5)
 
-//role assigning
+    //role assigning
     for(var name in Game.creeps) {
-        var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if(creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if(creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if(creep.memory.role == 'defender') {
-            roleDefender.run(creep);
-        }
-        if(creep.memory.role == 'courier') {
-            roleCourier.run(creep);
-        }
-        if(creep.memory.role == 'carrier') {
-            roleCarrier.run(creep);
-        }
-        if(creep.memory.role == 'remoteBuilder') {
-            roleRemoteBuilder.run(creep);
-        }
-        if(creep.memory.role == 'remoteMaintainer') {
-            roleRemoteMaintainer.run(creep);
-        }
-        if(creep.memory.role == 'remoteCarrier') {
-            roleRemoteCarrier.run(creep);
-        }
-        if(creep.memory.role == 'remoteReserver') {
-            roleRemoteReserver.run(creep);
-        }
-        if(creep.memory.role == 'superHarvester') {
-            roleSuperHarvester.run(creep);
-        }
-        if(creep.memory.role == 'towerMaintainer') {
-            roleTowerMaintainer.run(creep);
-        }
+      var creep = Game.creeps[name];
+      if(creep.memory.role == 'harvester') {
+        roleHarvester.run(creep);
+      }
+      if(creep.memory.role == 'upgrader') {
+        roleUpgrader.run(creep);
+      }
+      if(creep.memory.role == 'builder') {
+        roleBuilder.run(creep);
+      }
+      if(creep.memory.role == 'defender') {
+        roleDefender.run(creep);
+      }
+      if(creep.memory.role == 'courier') {
+        roleCourier.run(creep);
+      }
+      if(creep.memory.role == 'carrier') {
+        roleCarrier.run(creep);
+      }
+      if(creep.memory.role == 'remoteBuilder') {
+        roleRemoteBuilder.run(creep);
+      }
+      if(creep.memory.role == 'remoteMaintainer') {
+        roleRemoteMaintainer.run(creep);
+      }
+      if(creep.memory.role == 'remoteCarrier') {
+        roleRemoteCarrier.run(creep);
+      }
+      if(creep.memory.role == 'remoteReserver') {
+        roleRemoteReserver.run(creep);
+      }
+      if(creep.memory.role == 'superHarvester') {
+        roleSuperHarvester.run(creep);
+      }
+      if(creep.memory.role == 'towerMaintainer') {
+        roleTowerMaintainer.run(creep);
+      }
     }
 
-    Stats.runBuiltinStats()
   });
 }
