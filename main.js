@@ -1,25 +1,28 @@
 const profiler = require('screeps-profiler');
 require('utils.logger')
 var ScreepsStats = require('screepsstats')
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleDefender = require('role.defender')
-var roleCourier = require('role.courier')
-var roleTowerMaintainer = require('role.tower.maintainer')
-var roleCarrier = require('role.carrier')
-var roleSuperHarvester = require('role.super.harvester')
-var roleRemoteBuilder = require('role.remote.builder')
-var roleRemoteMaintainer = require('role.remote.maintainer')
-var roleRemoteCarrier = require('role.remote.carrier')
-var roleRemoteReserver = require('role.remote.reserver')
-var roleAttacker = require('role.attacker')
-var roleDismantler = require('role.dismantler')
-var roleHealer = require('role.healer')
-var roleTank = require('role.tank')
+var role = {}
+role.harvester = require('role.harvester');
+role.upgrader = require('role.upgrader');
+role.builder = require('role.builder');
+role.defender = require('role.defender')
+role.courier = require('role.courier')
+role.towerMaintainer = require('role.tower.maintainer')
+role.carrier = require('role.carrier')
+role.superHarvester = require('role.super.harvester')
+role.remoteBuilder = require('role.remote.builder')
+role.remoteMaintainer = require('role.remote.maintainer')
+role.remoteCarrier = require('role.remote.carrier')
+role.remoteReserver = require('role.remote.reserver')
+role.attacker = require('role.attacker')
+role.dismantler = require('role.dismantler')
+role.healer = require('role.healer')
+role.tank = require('role.tank')
 var structureTower = require('structure.tower')
 var controlCreepNumber = require('control.creep.number')
 var memoryUpdate = require('memory.update')
+var rc = require('tool.route.calculator')
+//rc.run()
 
 profiler.enable();
 global.Stats = new ScreepsStats();
@@ -51,7 +54,7 @@ module.exports.loop = function () {
     controlCreepNumber.run('superHarvester', 5)
     //controlCreepNumber.run('defender', 2)
     //controlCreepNumber.run('dismantler', 5)
-    //controlCreepNumber.run('attacker', 4)
+    controlCreepNumber.run('attacker', 1)
     //controlCreepNumber.run('tank', 4)
     //controlCreepNumber.run('healer', 4)
     //controlCreepNumber.run('carrier', 3)
@@ -60,54 +63,7 @@ module.exports.loop = function () {
     //role assigning
     for(var name in Game.creeps) {
       var creep = Game.creeps[name];
-      if(creep.memory.role == 'harvester') {
-        roleHarvester.run(creep);
-      }
-      if(creep.memory.role == 'upgrader') {
-        roleUpgrader.run(creep);
-      }
-      if(creep.memory.role == 'builder') {
-        roleBuilder.run(creep);
-      }
-      if(creep.memory.role == 'defender') {
-        roleDefender.run(creep);
-      }
-      if(creep.memory.role == 'courier') {
-        roleCourier.run(creep);
-      }
-      if(creep.memory.role == 'carrier') {
-        roleCarrier.run(creep);
-      }
-      if(creep.memory.role == 'remoteBuilder') {
-        roleRemoteBuilder.run(creep);
-      }
-      if(creep.memory.role == 'remoteMaintainer') {
-        roleRemoteMaintainer.run(creep);
-      }
-      if(creep.memory.role == 'remoteCarrier') {
-        roleRemoteCarrier.run(creep);
-      }
-      if(creep.memory.role == 'remoteReserver') {
-        roleRemoteReserver.run(creep);
-      }
-      if(creep.memory.role == 'superHarvester') {
-        roleSuperHarvester.run(creep);
-      }
-      if(creep.memory.role == 'towerMaintainer') {
-        roleTowerMaintainer.run(creep);
-      }
-      if(creep.memory.role == 'attacker') {
-        roleAttacker.run(creep);
-      }
-      if(creep.memory.role == 'dismantler') {
-        roleDismantler.run(creep);
-      }
-      if(creep.memory.role == 'healer') {
-        roleHealer.run(creep);
-      }
-      if(creep.memory.role == 'tank') {
-        roleTank.run(creep);
-      }
+      role[creep.memory.role].run(creep);
     }
 
     Stats.runBuiltinStats()
