@@ -26,7 +26,7 @@ cf.moveToDo = function (creep, target, action) {
     return
   }
   if (creep[action](target) == ERR_NOT_IN_RANGE) {
-    creep.moveTo(target,{reusePath: 30, serializeMemory: true})
+    creep.moveTo(target,{reusePath: 0, serializeMemory: false})
   }
 }.bind(cf)
 

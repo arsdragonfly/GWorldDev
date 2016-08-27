@@ -6,6 +6,22 @@ var controlCreepNumber = {
     if(role.length < roleNumber) {
       switch (roleName)
       {
+        case 'attacker':
+        var newName = Game.spawns['Spawn1'].createCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
+        console.log('Spawning new ' + roleName + ': '  + newName);
+        break
+        case 'dismantler':
+        var newName = Game.spawns['Spawn1'].createCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE], undefined, {role: roleName});
+        console.log('Spawning new ' + roleName + ': '  + newName);
+        break
+        case 'healer':
+        var newName = Game.spawns['Spawn1'].createCreep([HEAL,MOVE,HEAL,MOVE,HEAL,MOVE,HEAL,MOVE,HEAL,MOVE], undefined, {role: roleName});
+        console.log('Spawning new ' + roleName + ': '  + newName);
+        break
+        case 'tank':
+        var newName = Game.spawns['Spawn1'].createCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName});
+        console.log('Spawning new ' + roleName + ': '  + newName);
+        break
         case 'remoteBuilder':
         var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], undefined, {role: roleName, roomName: 'W39N57'});
         console.log('Spawning new ' + roleName + ': '  + newName);

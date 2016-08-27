@@ -10,6 +10,8 @@ var roleCarrier = {
     if (creep.memory.loading === null || creep.memory.destination == null) {
       creep.memory.loading = true
       var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+      //enable this at emergency
+      //var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
       dc.initializeDestination(creep,sc,'secondaryContainer')
       creep.say('loading')
     }
@@ -30,10 +32,13 @@ var roleCarrier = {
       creep.say('unloading')
     }
     if(creep.memory.loading) {
+      if (creep.memory.destination == undefined) {return false}
       var c = dc.findDestinationInRoom(creep,'secondaryContainer','structure',filters.container)
       cf.moveToDo(creep, c[0], 'withdraw')
       if (creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_ENOUGH_RESOURCES) {
         var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+        //enable this at emergency;
+        //var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
         if (sc.length > 0) {
           dc.initializeDestination(creep,sc,'secondaryContainer')
           c = dc.findDestinationInRoom(creep,'secondaryContainer','structure',filters.container)
