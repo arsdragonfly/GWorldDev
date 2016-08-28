@@ -42,7 +42,7 @@ var memoryUpdate = {
               //harvester: 2,
               courier: 1,
               superHarvester: 5,
-              carrier: 4
+              carrier: 4,
               //dismantler: 5
               attacker: 1,
               //tank: 4,
