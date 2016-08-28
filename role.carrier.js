@@ -7,18 +7,25 @@ var roleCarrier = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
+    var roomConfig = Memory.userdata.roomConfig[creep.memory.roomName]
     if (creep.memory.loading === null || creep.memory.destination == null) {
       creep.memory.loading = true
-      var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
-      //enable this at emergency
-      //var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
-      dc.initializeDestination(creep,sc,'secondaryContainer')
+      if (roomConfig.emergencyState == true) {
+        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
+      }
+      else {
+        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+      }
+    dc.initializeDestination(creep,sc,'secondaryContainer')
       creep.say('loading')
     }
     if (!creep.memory.loading && creep.carry.energy == 0) {
-      var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
-      //enable this at emergency;
-      //var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
+      if (roomConfig.emergencyState == true) {
+        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
+      }
+      else {
+        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+      }
       if (sc.length > 0) {
         dc.initializeDestination(creep,sc,'secondaryContainer')
         creep.memory.loading = true
@@ -36,9 +43,12 @@ var roleCarrier = {
       var c = dc.findDestinationInRoom(creep,'secondaryContainer','structure',filters.container)
       cf.moveToDo(creep, c[0], 'withdraw')
       if (creep.withdraw(c[0], RESOURCE_ENERGY) == ERR_NOT_ENOUGH_RESOURCES) {
-        var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
-        //enable this at emergency;
-        //var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
+        if (roomConfig.emergencyState == true) {
+          var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptyContainer });
+        }
+        else {
+          var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
+        }
         if (sc.length > 0) {
           dc.initializeDestination(creep,sc,'secondaryContainer')
           c = dc.findDestinationInRoom(creep,'secondaryContainer','structure',filters.container)

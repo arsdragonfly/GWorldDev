@@ -4,7 +4,7 @@ var roleTowerMaintainer = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-    if (!sc.speedControl(creep, 1)) {
+    if (!sc.speedControl(creep, 0)) {
       return
     }
     if(creep.carry.energy < creep.carryCapacity) {

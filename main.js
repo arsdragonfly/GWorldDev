@@ -21,7 +21,7 @@ role.tank = require('role.tank')
 var structureTower = require('structure.tower')
 var controlCreepNumber = require('control.creep.number')
 var memoryUpdate = require('memory.update')
-var rc = require('tool.route.calculator')
+//var rc = require('tool.route.calculator')
 //rc.run()
 
 profiler.enable();
@@ -39,22 +39,31 @@ module.exports.loop = function () {
       }
     }
 
+    for (roomName in Memory.userdata.roomConfig) {
+      var config = Memory.userdata.roomConfig[roomName]
+      var populationConfig = config.populationConfig
+      for (roleName in populationConfig) {
+        var n = populationConfig[roleName]
+        controlCreepNumber.run(roleName, n, roomName)
+      }
+    }
+
     //creeps number control
-    controlCreepNumber.run('remoteMaintainer', 2)
-    controlCreepNumber.run('remoteReserver', 2)
-    controlCreepNumber.run('remoteCarrier', 4)
-    controlCreepNumber.run('remoteBuilder', 1)
-    controlCreepNumber.run('builder', 2)
-    controlCreepNumber.run('defender', 2)
-    controlCreepNumber.run('towerMaintainer', 1)
-    controlCreepNumber.run('upgrader', 4)
-    controlCreepNumber.run('carrier', 4)
+    //controlCreepNumber.run('remoteMaintainer', 2)
+    //controlCreepNumber.run('remoteReserver', 2)
+    //controlCreepNumber.run('remoteCarrier', 4)
+    //controlCreepNumber.run('remoteBuilder', 1)
+    //controlCreepNumber.run('builder', 2)
+    //controlCreepNumber.run('defender', 2)
+    //controlCreepNumber.run('towerMaintainer', 1)
+    //controlCreepNumber.run('upgrader', 4)
+    //controlCreepNumber.run('carrier', 4)
     //controlCreepNumber.run('harvester', 2)
-    controlCreepNumber.run('courier', 1)
-    controlCreepNumber.run('superHarvester', 5)
+    //controlCreepNumber.run('courier', 1)
+    //controlCreepNumber.run('superHarvester', 5)
     //controlCreepNumber.run('defender', 2)
     //controlCreepNumber.run('dismantler', 5)
-    controlCreepNumber.run('attacker', 1)
+    //controlCreepNumber.run('attacker', 1)
     //controlCreepNumber.run('tank', 4)
     //controlCreepNumber.run('healer', 4)
     //controlCreepNumber.run('carrier', 3)

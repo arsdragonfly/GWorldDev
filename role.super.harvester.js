@@ -18,12 +18,19 @@ var roleSuperHarvester = {
     }
     if(creep.memory.harvesting) {
       cf.pickupEnergy(creep)
-      if(!creep.pos.isEqualTo(Game.flags[creep.memory.workSite])) {
-        creep.moveTo(Game.flags[creep.memory.workSite])
+      if(creep.memory.workSite == undefined) {
+        var source = creep.pos.findClosestByRange(FIND_SOURCES)
+        cf.moveToDo(creep, source, 'harvest')
+        return
       }
-      else {
+      if(creep.pos.isEqualTo(Game.flags[creep.memory.workSite])) {
         var source = creep.pos.findClosestByRange(FIND_SOURCES)
         creep.harvest(source)
+        return
+      }
+      if(!creep.pos.isEqualTo(Game.flags[creep.memory.workSite])) {
+        creep.moveTo(Game.flags[creep.memory.workSite])
+        return
       }
     }
     else {

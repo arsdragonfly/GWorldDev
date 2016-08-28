@@ -26,7 +26,7 @@ cf.moveToDo = function (creep, target, action) {
     return
   }
   if (creep[action](target) == ERR_NOT_IN_RANGE) {
-    creep.moveTo(target,{reusePath: 0, serializeMemory: false})
+    creep.moveTo(target,{reusePath: 5, serializeMemory: false})
   }
 }.bind(cf)
 
@@ -70,7 +70,7 @@ cf.repairInRoom = function(creep) {
       return
     }
     //walls below designated hits
-    targets = creep.room.find(FIND_MY_STRUCTURES, {filter: filters.damagedWallBelow(2000000)})
+    targets = creep.room.find(FIND_STRUCTURES, {filter: filters.damagedWallBelow(200000)})
     if (targets.length) {
       if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
         creep.moveTo(targets[0])
@@ -114,7 +114,7 @@ cf.repairInRoom = function(creep) {
       return
     }
     //walls below designated hits
-    target = creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {filter: filters.damagedStructureOfType(STRUCTURE_WALL, 180000)})
+    target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: filters.damagedStructureOfType(STRUCTURE_WALL, 180000)})
     if (target != undefined) {
       this.moveToDo(creep, target, 'repair')
       return
