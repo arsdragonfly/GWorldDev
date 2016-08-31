@@ -19,7 +19,7 @@ var roleRemoteMaintainer = {
 
     if (creep.memory.maintaining) {
       var roomName = creep.memory.roomName
-      var targetRoomNames = Memory.userdata[roomName].remoteConstructionRooms
+      var targetRoomNames = Memory.userdata.roomConfig[roomName].remoteConstructionRooms
       if (targetRoomNames != undefined) {
         if (creep.memory.targetRoomName == undefined) {
           creep.memory.targetRoomName = dc.randomPick(targetRoomNames)

@@ -6,7 +6,7 @@ var rr = {
   run: function(creep) {
     if (creep.memory.targetRoomName == undefined) {
       var roomName = creep.memory.roomName
-      var targetRoomNames = Memory.userdata[roomName].remoteHarvestingRooms
+      var targetRoomNames = Memory.userdata.roomConfig[roomName].remoteHarvestingRooms
       var possibleRoomNames = new Array()
       for (i in targetRoomNames) {
         if (Game.rooms[targetRoomNames[i]] != undefined) {

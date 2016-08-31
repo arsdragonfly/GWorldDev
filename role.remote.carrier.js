@@ -17,7 +17,7 @@ var rc = {
       if (creep.memory.targetRoomName == undefined) {
         //choose a target room randomly
         var roomName = creep.memory.roomName
-        var targetRoomNames = Memory.userdata[roomName].remoteHarvestingRooms
+        var targetRoomNames = Memory.userdata.roomConfig[roomName].remoteHarvestingRooms
         var r = new Array()
         for (i in targetRoomNames) {
           if (Game.rooms[targetRoomNames[i]] != undefined) {

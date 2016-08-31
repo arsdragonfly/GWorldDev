@@ -19,7 +19,7 @@ var roleRemoteBuilder = {
 
     if (creep.memory.building) {
       var roomName = creep.memory.roomName
-      var targetRoomNames = Memory.userdata[roomName].remoteConstructionRooms
+      var targetRoomNames = Memory.userdata.roomConfig[roomName].remoteConstructionRooms
       for (i in targetRoomNames) {
         if (Game.rooms[targetRoomNames[i]] != undefined) {
           var targets = Game.rooms[targetRoomNames[i]].find(FIND_CONSTRUCTION_SITES)

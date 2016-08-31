@@ -16,7 +16,7 @@ var roleCarrier = {
       else {
         var sc = creep.room.find(FIND_STRUCTURES,{ filter: filters.nonEmptySecondaryContainer });
       }
-    dc.initializeDestination(creep,sc,'secondaryContainer')
+      dc.initializeDestination(creep,sc,'secondaryContainer')
       creep.say('loading')
     }
     if (!creep.memory.loading && creep.carry.energy == 0) {
